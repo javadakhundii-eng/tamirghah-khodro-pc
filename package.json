@@ -1,0 +1,24 @@
+{
+  "name": "tamirgah-desktop",
+  "version": "1.0.0",
+  "description": "نرم‌افزار حسابداری تعمیرگاه - نسخه دسکتاپ ویندوز",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win portable",
+    "build:win-installer": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "ir.tamirgah.desktop",
+    "productName": "حسابداری تعمیرگاه",
+    "files": ["main.js", "www/**/*"],
+    "win": {
+      "target": ["portable", "nsis"],
+      "icon": "www/icon.ico"
+    }
+  }
+}
