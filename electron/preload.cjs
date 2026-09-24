@@ -1,0 +1,2 @@
+const { contextBridge, ipcRenderer } = require('electron');
+contextBridge.exposeInMainWorld('repairshop', { login:(pin)=>ipcRenderer.invoke('login',pin), dashboard:()=>ipcRenderer.invoke('dashboard'), list:(type)=>ipcRenderer.invoke('list',type), create:(type,data)=>ipcRenderer.invoke('create',type,data), addWorkOrder:(data)=>ipcRenderer.invoke('work-order:create',data), databasePath:()=>ipcRenderer.invoke('database:path') });
