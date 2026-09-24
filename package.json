@@ -1,24 +1,53 @@
 {
-  "name": "tamirgah-desktop",
+  "name": "repairshop-pro",
   "version": "1.0.0",
-  "description": "نرم‌افزار حسابداری تعمیرگاه - نسخه دسکتاپ ویندوز",
-  "main": "main.js",
+  "description": "مدیریت آفلاین تعمیرگاه خودرو",
+  "main": "electron/main.cjs",
   "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && electron .\"",
     "start": "electron .",
-    "build:win": "electron-builder --win portable",
-    "build:win-installer": "electron-builder --win nsis"
+    "build": "tsc --noEmit && vite build",
+    "rebuild:native": "electron-rebuild -f -w better-sqlite3",
+    "dist:win": "npm run build && electron-builder --win nsis",
+    "test": "tsc --noEmit && vite build"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
     "electron": "^31.0.0",
-    "electron-builder": "^24.13.3"
+    "electron-builder": "^24.13.3",
+    "electron-rebuild": "^3.2.9",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
   },
   "build": {
-    "appId": "ir.tamirgah.desktop",
-    "productName": "حسابداری تعمیرگاه",
-    "files": ["main.js", "www/**/*"],
+    "appId": "ir.repairshop.pro",
+    "productName": "RepairShop Pro",
+    "asar": true,
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json",
+      "node_modules/better-sqlite3/**/*"
+    ],
     "win": {
-      "target": ["portable", "nsis"],
-      "icon": "www/icon.ico"
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "RepairShop-Pro-Setup-${version}.${ext}",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
     }
   }
 }
